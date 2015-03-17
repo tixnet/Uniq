@@ -278,7 +278,7 @@
 
 
     <!-- Colors for the app -->
-    <color name="primary">@color/indigo_500</color>
+    <color name="primary">@color/grey_900</color>
     <color name="primary_dark">@color/indigo_700</color>
     <color name="accent">@color/pink_A200</color>
     <color name="primary_pressed">@color/pink_200</color>
