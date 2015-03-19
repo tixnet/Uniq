@@ -27,5 +27,4 @@
         fab:fab_colorPressed="@color/primary_pressed"
         fab:fab_colorRipple="@color/ripple" />
 
-
 </RelativeLayout>
