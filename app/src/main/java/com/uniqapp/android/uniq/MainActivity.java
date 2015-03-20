@@ -1,13 +1,11 @@
 package com.uniqapp.android.uniq;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends BaseActivity{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -16,13 +14,7 @@ public class MainActivity extends ActionBarActivity {
 
         //TODO Implement fragments, set Geocoder
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.my_awesome_toolbar);
-        setSupportActionBar(toolbar);
-
-        Intent intent = getIntent();
-
-        // Retrieving data from Fullscreen Activity
-        String city = intent.getStringExtra("City");
+        Toolbar toolbar = getActionBarToolbar();
 
     }
 

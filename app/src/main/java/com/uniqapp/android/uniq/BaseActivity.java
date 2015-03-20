@@ -5,7 +5,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toolbar;
+import android.support.v7.widget.Toolbar;
 
 
 public abstract class BaseActivity extends ActionBarActivity {
@@ -61,6 +61,14 @@ public abstract class BaseActivity extends ActionBarActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+    }
+
+    protected Toolbar getActionBarToolbar() {
+        if (mActionBarToolbar == null) {
+            mActionBarToolbar = (Toolbar) findViewById(R.id.toolbar_actionbar);
+            if (mActionBarToolbar != null) setSupportActionBar(mActionBarToolbar);
+        }
+        return  mActionBarToolbar;
     }
 
 }

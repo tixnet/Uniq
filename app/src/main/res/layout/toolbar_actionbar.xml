@@ -4,8 +4,10 @@
     app:theme="@style/ActionBarThemeOverlay"
     app:popupTheme="@style/ActionBarPopupThemeOverlay"
     android:id="@+id/toolbar_actionbar"
-    android:background="@null"
+    android:background="@color/primary"
     app:titleTextAppearance="@style/ActionBar.TitleText"
     app:contentInsetStart="?actionBarInsetStart"
     android:layout_width="match_parent"
     android:layout_height="?actionBarSize" />
+
+

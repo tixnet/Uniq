@@ -280,7 +280,7 @@
     <!-- Colors for the app -->
     <color name="primary">@color/orange_500</color>
     <color name="primary_dark">@color/orange_700</color>
-    <color name="accent">@color/cyan_700</color>
+    <color name="accent">@color/blue_500</color>
     <color name="primary_pressed">@color/cyan_500</color>
     <color name="ripple">@color/lime_A100</color>
     <color name="welcome_background">@color/cyan_200</color>
