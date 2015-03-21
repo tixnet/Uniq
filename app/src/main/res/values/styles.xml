@@ -32,17 +32,20 @@
     </style>
 
 
-    <style name="ActionBarThemeOverlay" parent="">
+    <style name="ActionBarThemeOverlay" parent="Theme">
         <item name="android:textColorPrimary">#fff</item>
-        <item name="colorControlNormal">#fff</item>
+        <item name="colorControlNormal">@color/grey_700</item>
         <item name="colorControlHighlight">#3fff</item>
     </style>
 
     <style name="ActionBarPopupThemeOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
     <style name="ActionBar.TitleText" parent="TextAppearance.AppCompat.Widget.ActionBar.Title">
-        <item name="android:textColor">#fff</item>
+        <item name="android:textColor">@color/grey_700</item>
+        <item name="android:textColorSecondary">@color/grey_700</item>
+
         <item name="android:textSize">18sp</item>
+        <item name="android:windowActionBarOverlay">true</item>
     </style>
 
 </resources>

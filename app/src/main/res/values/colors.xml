@@ -278,12 +278,46 @@
 
 
     <!-- Colors for the app -->
-    <color name="primary">@color/orange_500</color>
+    <color name="primary">@color/grey_200</color>
     <color name="primary_dark">@color/orange_700</color>
     <color name="accent">@color/blue_500</color>
     <color name="primary_pressed">@color/cyan_500</color>
     <color name="ripple">@color/lime_A100</color>
     <color name="welcome_background">@color/cyan_200</color>
+    <color name="translucent_tooblar">#80e8eaf6</color>
+<!--
+    <color name="fab">@color/grey_700</color>
+-->
+    <color name="fab">#80616161</color>
+
+
 
 
 </resources>
+
+    <!--
+        HEX Opacity Values
+
+        alpha_red_green_blue
+
+    100% — FF
+    95% — F2
+    90% — E6
+    85% — D9
+    80% — CC
+    75% — BF
+    70% — B3
+    65% — A6
+    60% — 99
+    55% — 8C
+    50% — 80
+    45% — 73
+    40% — 66
+    35% — 59
+    30% — 4D
+    25% — 40
+    20% — 33
+    15% — 26
+    10% — 1A
+    5% — 0D
+    0% — 00-->
