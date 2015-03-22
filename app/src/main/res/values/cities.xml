@@ -1,9 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="cities_array">
+        <item>Białystok</item>
+        <item>Bydgoszcz</item>
+        <item>Gdańsk</item>
+        <item>Gorzów Wielkopolski</item>
+        <item>Katowice</item>
+        <item>Kielce</item>
         <item>Kraków</item>
+        <item>Lublin</item>
+        <item>Łódź</item>
+        <item>Olsztyn</item>
+        <item>Opole</item>
         <item>Poznań</item>
+        <item>Rzeszów</item>
+        <item>Szczecin</item>
+        <item>Truń</item>
         <item>Warszawa</item>
         <item>Wrocław</item>
+        <item>Zielona Góra</item>
     </string-array>
 </resources>
