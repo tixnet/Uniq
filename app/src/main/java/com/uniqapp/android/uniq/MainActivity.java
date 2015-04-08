@@ -25,6 +25,8 @@ public class MainActivity extends BaseActivity implements OnMapReadyCallback {
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
+
+
     }
 
     @Override
