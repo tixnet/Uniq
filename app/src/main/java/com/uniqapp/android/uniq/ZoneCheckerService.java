@@ -26,7 +26,7 @@ public class ZoneCheckerService extends Service {
         windowManager = (WindowManager) getSystemService(WINDOW_SERVICE);
 
         zoneButton = new ImageView(this);
-        zoneButton.setImageResource(R.mipmap.ic_launcher);
+        zoneButton.setImageResource(R.mipmap.ic_test);
 
         WindowManager.LayoutParams params = new WindowManager.LayoutParams(
                 WindowManager.LayoutParams.WRAP_CONTENT,
@@ -35,9 +35,17 @@ public class ZoneCheckerService extends Service {
                 WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
                 PixelFormat.TRANSLUCENT);
 
-        params.gravity = Gravity.TOP | Gravity.LEFT;
+        params.gravity = Gravity.BOTTOM | Gravity.LEFT;
         params.x = 0;
         params.y = 100;
 
+        windowManager.addView(zoneButton, params);
+
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (zoneButton != null) windowManager.removeView(zoneButton);
     }
 }

@@ -285,6 +285,7 @@
     <color name="ripple">@color/lime_A100</color>
     <color name="welcome_background">@color/cyan_200</color>
     <color name="translucent_tooblar">#80e8eaf6</color>
+    <color name="translucent_zone">#0df4ff81</color>
 <!--
     <color name="fab">@color/grey_700</color>
 -->
