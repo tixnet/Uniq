@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<city>
+    <name>Kraków</name>
+    <zones>
+        <zone>
+            <zoneName>Test</zoneName>
+            <color>#test</color>
+            <coordinates>test</coordinates>
+        </zone>
+    </zones>
+</city>

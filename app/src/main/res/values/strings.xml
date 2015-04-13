@@ -14,4 +14,7 @@
     <string name="title_activity_base">BaseActivity</string>
     <string name="title_activity_welcome">Welcome</string>
 
+    <string name="xml_error">XML parsing error</string>
+    <string name="io_error">Opening XML file error</string>
+
 </resources>

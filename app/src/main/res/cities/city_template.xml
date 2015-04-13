@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<city>
+    <name></name>
+    <zones>
+        <zone id="">
+            <zoneName></zoneName>
+            <color></color>
+            <coordinates></coordinates>
+        </zone>
+    </zones>
+</city>
