@@ -1,12 +1,11 @@
 package com.uniqapp.android.uniq;
 
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ProgressBar;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -30,11 +29,13 @@ import java.util.List;
 public class MainActivity extends BaseActivity implements OnMapReadyCallback {
 
     private static final String TAG = "MainActivity";
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        progressBar = (ProgressBar) findViewById(R.id.progress_bar);
 
         String city = "Krakow";
         Toolbar toolbar = getActionBarToolbar();
@@ -50,9 +51,6 @@ public class MainActivity extends BaseActivity implements OnMapReadyCallback {
                 moveTaskToBack(true);
             }
         });
-
-
-
     }
 
     @Override
@@ -89,18 +87,26 @@ public class MainActivity extends BaseActivity implements OnMapReadyCallback {
         // In meters
     }
 
-    private class OpenXmlTask extends AsyncTask<String,Void, String> {
+    /*private class OpenXmlTask extends AsyncTask<String,Void, List<Zone>> {
 
         @Override
-        protected String doInBackground(String... string) {
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progressBar.setVisibility(View.VISIBLE);
+        }
+
+        @Override
+        protected List<Zone> doInBackground(List<Zone>... passing) {
             try {
                 //TODO
+                List<String> zones = loadXml();
+
                 loadXml("test");
                 return "test";
             }
             catch (IOException e) {
                 Log.d(TAG, getResources().getString(R.string.io_error));
-                return getResources().getString(R.string.io_error);
+                return zones;
             }
             catch (XmlPullParserException e) {
                 Log.d(TAG, getResources().getString(R.string.xml_error));
@@ -109,10 +115,11 @@ public class MainActivity extends BaseActivity implements OnMapReadyCallback {
         }
         @Override
         protected void onPostExecute(String result) {
+            progressBar.setVisibility(View.INVISIBLE);
             setContentView(R.layout.activity_main);
         }
     }
-
+*/
 
     private List loadXml(String city) throws XmlPullParserException, IOException {
         InputStream stream = null;
@@ -125,12 +132,6 @@ public class MainActivity extends BaseActivity implements OnMapReadyCallback {
         try {
             stream = new FileInputStream("Krakow.xml");
             zones = cityXMLParser.parse(stream);
-        }
-        catch (IOException e) {
-            Log.d(TAG, getResources().getString(R.string.io_error));
-        }
-        catch (XmlPullParserException e) {
-            Log.d(TAG, getResources().getString(R.string.xml_error));
         }
         finally {
             if (stream != null) stream.close();
