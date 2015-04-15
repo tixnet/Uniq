@@ -13,7 +13,6 @@ import android.view.View;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
-import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.Circle;
 import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
@@ -28,12 +27,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class MainActivity extends BaseActivity implements OnMapReadyCallback {
+public class MainActivity extends BaseActivity {
 
     private static final String TAG = "MainActivity";
     private OpenXmlTask openXmlTask;
     private MapFragment mapFragment;
     private List<Zone> cityZones;
+    private GoogleMap map;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,12 +41,9 @@ public class MainActivity extends BaseActivity implements OnMapReadyCallback {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = getActionBarToolbar();
         String city = "krakow";
-        openXmlTask = new OpenXmlTask();
-        openXmlTask.execute(city);
+
         mapFragment = (MapFragment) getFragmentManager()
                 .findFragmentById(R.id.map);
-        mapFragment.getView().setVisibility(View.INVISIBLE);
-
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -55,10 +52,12 @@ public class MainActivity extends BaseActivity implements OnMapReadyCallback {
                 moveTaskToBack(true);
             }
         });
-        if (openXmlTask.getStatus() == AsyncTask.Status.FINISHED) {
-            Log.d("Test Watkow", "TEST");
-            mapFragment.getMapAsync(this);
-        }
+
+        map = mapFragment.getMap();
+
+        openXmlTask = new OpenXmlTask();
+        openXmlTask.execute(city);
+
     }
 
     @Override
@@ -76,7 +75,7 @@ public class MainActivity extends BaseActivity implements OnMapReadyCallback {
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
+  /*  @Override
     public void onMapReady(GoogleMap map) {
         LatLng krakow = new LatLng(50.06465, 19.94498);
 
@@ -86,10 +85,10 @@ public class MainActivity extends BaseActivity implements OnMapReadyCallback {
         CircleOptions circleOptions = new CircleOptions()
                 .center(new LatLng(50.06465, 19.94498)).radius(1000).strokeWidth(1).fillColor(R.color.amber_A200);
 
-        Circle circle = map.addCircle(circleOptions);
+
         // In meters
     }
-
+*/
     private class OpenXmlTask extends AsyncTask<String, Void, List<Zone>> {
 
         private Activity activity;
@@ -116,9 +115,12 @@ public class MainActivity extends BaseActivity implements OnMapReadyCallback {
             }
             catch (IOException e) {
                 Log.d(TAG, getResources().getString(R.string.io_error));
+                e.getStackTrace();
+
             }
             catch (XmlPullParserException e) {
                 Log.d(TAG, getResources().getString(R.string.xml_error));
+                e.getStackTrace();
 
             }
             finally {
@@ -129,6 +131,17 @@ public class MainActivity extends BaseActivity implements OnMapReadyCallback {
         protected void onPostExecute(List<Zone> zones) {
             dialog.dismiss();
             updateCityZones(zones);
+            String coordinatesXML = zones.get(0).coordinates;
+            String[] splitCoordinatesXML = coordinatesXML.split("\\s*;\\s*");
+
+            CircleOptions circleOptions = new CircleOptions()
+                    .center(new LatLng(50.06465, 19.94498)).radius(1000).strokeWidth(1).fillColor(R.color.amber_A200);
+
+            Circle circle = map.addCircle(circleOptions);
+            LatLng krakow = new LatLng(50.06465, 19.94498);
+
+
+            map.moveCamera(CameraUpdateFactory.newLatLngZoom(krakow, 13));
          //   mapFragment.getView().setVisibility(View.VISIBLE);
             //*setContentView(R.layout.activity_main);*/
         }
