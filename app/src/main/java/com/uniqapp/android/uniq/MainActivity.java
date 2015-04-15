@@ -131,8 +131,8 @@ public class MainActivity extends BaseActivity {
         protected void onPostExecute(List<Zone> zones) {
             dialog.dismiss();
             updateCityZones(zones);
-            String coordinatesXML = zones.get(0).coordinates;
-            String[] splitCoordinatesXML = coordinatesXML.split("\\s*;\\s*");
+//            String coordinatesXML = zones.get(0).coordinates;
+//            String[] splitCoordinatesXML = coordinatesXML.split("\\s*;\\s*");
 
             CircleOptions circleOptions = new CircleOptions()
                     .center(new LatLng(50.06465, 19.94498)).radius(1000).strokeWidth(1).fillColor(R.color.amber_A200);
