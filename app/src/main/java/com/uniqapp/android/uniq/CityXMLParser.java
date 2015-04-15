@@ -1,5 +1,6 @@
 package com.uniqapp.android.uniq;
 
+import android.util.Log;
 import android.util.Xml;
 
 import org.xmlpull.v1.XmlPullParser;
@@ -38,8 +39,9 @@ public class CityXMLParser{
                 continue;
             }
             String name = parser.getName();
+            Log.d("Parser name", parser.getName());
             // Starts by looking for the entry tag
-            if (name.equals("entry")) {
+            if (name.equals("zone")) {
                 zones.add(readZone(parser));
             } else {
                 skip(parser);
@@ -53,7 +55,7 @@ public class CityXMLParser{
         public final String coordinates;
         public final String color;
 
-        private Zone(String zoneName, String coordinates, String color) {
+        protected Zone(String zoneName, String coordinates, String color) {
             this.zoneName = zoneName;
             this.coordinates = coordinates;
             this.color = color;
@@ -70,8 +72,10 @@ public class CityXMLParser{
                 continue;
             }
             String name = parser.getName();
+            Log.d("Parser name 2", parser.getName());
             if (name.equals("zoneName")) {
                 zoneName = readZoneName(parser);
+                Log.d("Zone name", String.format("Zone name " +zoneName));
             }
             else if (name.equals("coordinates")){
                 coordinates = readCoordinates(parser);
@@ -80,8 +84,6 @@ public class CityXMLParser{
                 color = readColor(parser);
             }
             else skip(parser);
-
-
         }
 
         return new Zone(zoneName, coordinates, color);

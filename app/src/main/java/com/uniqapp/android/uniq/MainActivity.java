@@ -1,5 +1,7 @@
 package com.uniqapp.android.uniq;
 
+import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -7,7 +9,6 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ProgressBar;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -16,36 +17,35 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.Circle;
 import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
 import com.melnykov.fab.FloatingActionButton;
 import com.uniqapp.android.uniq.CityXMLParser.Zone;
 
 import org.xmlpull.v1.XmlPullParserException;
 
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
 
 
 public class MainActivity extends BaseActivity implements OnMapReadyCallback {
 
     private static final String TAG = "MainActivity";
-    private ProgressBar progressBar;
-    private OpenXmlTask openXmlTask = new OpenXmlTask();
+    private OpenXmlTask openXmlTask;
+    private MapFragment mapFragment;
+    private List<Zone> cityZones;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        progressBar = (ProgressBar) findViewById(R.id.progress_bar);
-
-        String city = "Krakow";
-        openXmlTask.execute(city);
         Toolbar toolbar = getActionBarToolbar();
-        MapFragment mapFragment = (MapFragment) getFragmentManager()
+        String city = "krakow";
+        openXmlTask = new OpenXmlTask();
+        openXmlTask.execute(city);
+        mapFragment = (MapFragment) getFragmentManager()
                 .findFragmentById(R.id.map);
-        mapFragment.getMapAsync(this);
+        mapFragment.getView().setVisibility(View.INVISIBLE);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -55,6 +55,10 @@ public class MainActivity extends BaseActivity implements OnMapReadyCallback {
                 moveTaskToBack(true);
             }
         });
+        if (openXmlTask.getStatus() == AsyncTask.Status.FINISHED) {
+            Log.d("Test Watkow", "TEST");
+            mapFragment.getMapAsync(this);
+        }
     }
 
     @Override
@@ -79,11 +83,6 @@ public class MainActivity extends BaseActivity implements OnMapReadyCallback {
 
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(krakow, 13));
 
-        map.addMarker(new MarkerOptions()
-                .title("Kraków")
-                .snippet("Test")
-                .position(krakow));
-
         CircleOptions circleOptions = new CircleOptions()
                 .center(new LatLng(50.06465, 19.94498)).radius(1000).strokeWidth(1).fillColor(R.color.amber_A200);
 
@@ -93,19 +92,27 @@ public class MainActivity extends BaseActivity implements OnMapReadyCallback {
 
     private class OpenXmlTask extends AsyncTask<String, Void, List<Zone>> {
 
+        private Activity activity;
+        List<Zone> zones = new ArrayList<Zone>();
+        private ProgressDialog dialog;
+
+        private OpenXmlTask() {
+           // this.activity = activity;
+            this.dialog = new ProgressDialog(MainActivity.this);
+        }
+
+
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            progressBar.setVisibility(View.VISIBLE);
+            this.dialog.setMessage("Czekaj");
+            this.dialog.show();
         }
 
         @Override
         protected List<Zone> doInBackground(String... passing) {
-            List<Zone> zones = null;
             try {
-                //TODO
-
-                loadXml("Krakow");
+                zones = loadXml("krakow");
             }
             catch (IOException e) {
                 Log.d(TAG, getResources().getString(R.string.io_error));
@@ -120,8 +127,10 @@ public class MainActivity extends BaseActivity implements OnMapReadyCallback {
         }
         @Override
         protected void onPostExecute(List<Zone> zones) {
-            /*progressBar.setVisibility(View.INVISIBLE);
-            *//*setContentView(R.layout.activity_main);*/
+            dialog.dismiss();
+            updateCityZones(zones);
+         //   mapFragment.getView().setVisibility(View.VISIBLE);
+            //*setContentView(R.layout.activity_main);*/
         }
     }
 
@@ -135,13 +144,17 @@ public class MainActivity extends BaseActivity implements OnMapReadyCallback {
         String color = null;
 
         try {
-            stream = new FileInputStream("Krakow.xml");
+            stream = getResources().openRawResource(R.raw.krakow);
             zones = cityXMLParser.parse(stream);
         }
         finally {
             if (stream != null) stream.close();
         }
         return zones;
+    }
+
+    private void updateCityZones(List<Zone> zones) {
+        cityZones = new ArrayList<Zone>(zones);
     }
 
 }
