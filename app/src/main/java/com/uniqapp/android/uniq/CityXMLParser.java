@@ -3,6 +3,8 @@ package com.uniqapp.android.uniq;
 import android.util.Log;
 import android.util.Xml;
 
+import com.google.android.gms.maps.model.LatLng;
+
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 
@@ -52,10 +54,10 @@ public class CityXMLParser{
 
     public static class Zone {
         public final String zoneName;
-        public final String coordinates;
+        public final List<LatLng> coordinates;
         public final String color;
 
-        protected Zone(String zoneName, String coordinates, String color) {
+        protected Zone(String zoneName, List<LatLng> coordinates, String color) {
             this.zoneName = zoneName;
             this.coordinates = coordinates;
             this.color = color;
@@ -65,14 +67,13 @@ public class CityXMLParser{
     private Zone readZone(XmlPullParser parser) throws XmlPullParserException, IOException {
         parser.require(XmlPullParser.START_TAG, ns, "zone");
         String zoneName = null;
-        String coordinates = null;
+        List<LatLng> coordinates = null;
         String color = null;
         while (parser.next()!= XmlPullParser.END_TAG) {
             if (parser.getEventType() != XmlPullParser.START_TAG) {
                 continue;
             }
             String name = parser.getName();
-            Log.d("Parser name 2", parser.getName());
             if (name.equals("zoneName")) {
                 zoneName = readZoneName(parser);
                 Log.d("Zone name", String.format("Zone name " +zoneName));
@@ -91,23 +92,37 @@ public class CityXMLParser{
 
     private String readZoneName(XmlPullParser parser) throws IOException, XmlPullParserException {
         parser.require(XmlPullParser.START_TAG, ns, "zoneName");
-        String title = readText(parser);
+        String zoneName = readText(parser);
         parser.require(XmlPullParser.END_TAG, ns, "zoneName");
-        return title;
+        return zoneName;
     }
 
-    private String readCoordinates(XmlPullParser parser) throws IOException, XmlPullParserException {
+    private List<LatLng> readCoordinates(XmlPullParser parser) throws IOException, XmlPullParserException {
         parser.require(XmlPullParser.START_TAG, ns, "coordinates");
-        String title = readText(parser);
+        String coordinates = readText(parser);
         parser.require(XmlPullParser.END_TAG, ns, "coordinates");
-        return title;
+        String[] coordinatesArray = coordinates.split(";");
+
+        List<LatLng> coordinatesLatLng = new ArrayList<>();
+        String[] latLngs;
+        double latitude;
+        double longitude;
+        for (String latLng : coordinatesArray) {
+            latLngs = latLng.split(",");
+            latitude = Double.parseDouble(latLngs[1]);
+            longitude = Double.parseDouble(latLngs[0]);
+            LatLng coordinatesPoint = new LatLng(latitude,longitude);
+            coordinatesLatLng.add(coordinatesPoint);
+        }
+        
+        return coordinatesLatLng;
     }
 
     private String readColor(XmlPullParser parser) throws IOException, XmlPullParserException {
         parser.require(XmlPullParser.START_TAG, ns, "color");
-        String title = readText(parser);
+        String color = readText(parser);
         parser.require(XmlPullParser.END_TAG, ns, "color");
-        return title;
+        return color;
     }
 
     private String readText(XmlPullParser parser) throws IOException, XmlPullParserException {

@@ -1,8 +1,17 @@
 <city>
     <zone>
-        <zoneName>test</zoneName>
-        <coordinates>test</coordinates>
+        <zoneName>Krakow1</zoneName>
+        <coordinates>19.920959500000002,50.0671118;19.9232769,50.0459511;19.955549199999997,50.047549499999995;19.951601000000004,50.06810350000001;19.920959500000002,50.0671118</coordinates>
         <color>test</color>
     </zone>
-
+    <zone>
+        <zoneName>Krakow2</zoneName>
+        <coordinates>19.9487686,50.0585715;19.9649048,50.062924499999994;19.9573517,50.0737777;19.938812300000002,50.0683789;19.9487686,50.0585715</coordinates>
+        <color>test</color>
+    </zone>
+    <zone>
+        <zoneName>Krakow3</zoneName>
+        <coordinates>19.9363232,50.0664507;19.9691105,50.0711886;19.963960600000004,50.0813239;19.931345,50.0763667;19.9363232,50.0664507</coordinates>
+        <color>test</color>
+    </zone>
 </city>

@@ -284,16 +284,27 @@
     <color name="primary_pressed">@color/cyan_500</color>
     <color name="ripple">@color/lime_A100</color>
     <color name="welcome_background">@color/cyan_200</color>
-    <color name="translucent_tooblar">#80e8eaf6</color>
+    <color name="translucent_tooblar">#8076ff03</color>
+    <!--<color name="translucent_tooblar">#80e8eaf6</color>-->
     <color name="translucent_zone">#0df4ff81</color>
 <!--
     <color name="fab">@color/grey_700</color>
 -->
-    <color name="fab">#80616161</color>
+    <color name="fab">#80212121</color>
+
+    <color name="zone1">#8000695c</color>
+    <color name="zone2">#80ff3d00</color>
+    <color name="zone3">#803b50ce</color>
 
 
-
-
+    3b50ce
+    <color name="black_semi_transparent">#B2000000</color>
+    <color name="background">#e5e5e5</color>
+    <color name="half_black">#808080</color>
+    <color name="fam">#424242</color>
+    <color name="fam_pressed">#455a64</color>
+    <color name="blue_semi_transparent">#805677fc</color>
+    <color name="blue_semi_transparent_pressed">#80738ffe</color>
 </resources>
 
     <!--

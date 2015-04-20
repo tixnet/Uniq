@@ -3,6 +3,8 @@ package com.uniqapp.android.uniq;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ShapeDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -10,15 +12,18 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.getbase.floatingactionbutton.FloatingActionsMenu;
+import android.graphics.drawable.shapes.OvalShape;
+import android.view.View.OnClickListener;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
-import com.google.android.gms.maps.model.Circle;
-import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
-import com.melnykov.fab.FloatingActionButton;
+import com.google.android.gms.maps.model.Polygon;
+import com.google.android.gms.maps.model.PolygonOptions;
+//import com.melnykov.fab.FloatingActionButton;
 import com.uniqapp.android.uniq.CityXMLParser.Zone;
-
+import com.getbase.floatingactionbutton.FloatingActionButton;
 import org.xmlpull.v1.XmlPullParserException;
 
 import java.io.IOException;
@@ -44,17 +49,21 @@ public class MainActivity extends BaseActivity {
 
         mapFragment = (MapFragment) getFragmentManager()
                 .findFragmentById(R.id.map);
+/*
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startService(new Intent(getApplicationContext(), ZoneCheckerService.class));
+                startService(new Intent(getApplicationContext(), MiniAppService.class));
                 moveTaskToBack(true);
             }
         });
+*/
+
+
 
         map = mapFragment.getMap();
-
         openXmlTask = new OpenXmlTask();
         openXmlTask.execute(city);
 
@@ -104,7 +113,7 @@ public class MainActivity extends BaseActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            this.dialog.setMessage("Czekaj");
+            this.dialog.setMessage(getResources().getString(R.string.loading));
             this.dialog.show();
         }
 
@@ -134,16 +143,25 @@ public class MainActivity extends BaseActivity {
 //            String coordinatesXML = zones.get(0).coordinates;
 //            String[] splitCoordinatesXML = coordinatesXML.split("\\s*;\\s*");
 
-            CircleOptions circleOptions = new CircleOptions()
-                    .center(new LatLng(50.06465, 19.94498)).radius(1000).strokeWidth(1).fillColor(R.color.amber_A200);
 
-            Circle circle = map.addCircle(circleOptions);
+            PolygonOptions polygonOptions = new PolygonOptions();
+            for (LatLng coordinates : cityZones.get(0).coordinates) {
+                polygonOptions.add(coordinates);
+            }
+            Polygon polygon = map.addPolygon(polygonOptions.strokeWidth(0).fillColor(getResources().getColor(R.color.zone1)));
+            PolygonOptions polygonOptions2 = new PolygonOptions();
+            for (LatLng coordinates : cityZones.get(1).coordinates) {
+                polygonOptions2.add(coordinates);
+            }
+            Polygon polygon2 = map.addPolygon(polygonOptions2.strokeWidth(0).fillColor(getResources().getColor(R.color.zone2)));
+            PolygonOptions polygonOptions3 = new PolygonOptions();
+            for (LatLng coordinates : cityZones.get(2).coordinates) {
+                polygonOptions3.add(coordinates);
+            }
+            Polygon polygon3 = map.addPolygon(polygonOptions3.strokeWidth(0).fillColor(getResources().getColor(R.color.zone3)));
+
             LatLng krakow = new LatLng(50.06465, 19.94498);
-
-
             map.moveCamera(CameraUpdateFactory.newLatLngZoom(krakow, 13));
-         //   mapFragment.getView().setVisibility(View.VISIBLE);
-            //*setContentView(R.layout.activity_main);*/
         }
     }
 
@@ -169,5 +187,22 @@ public class MainActivity extends BaseActivity {
     private void updateCityZones(List<Zone> zones) {
         cityZones = new ArrayList<Zone>(zones);
     }
+
+/*    private void stringToLatLong(List<Zone> zones) {
+        String[] coordinates;
+        String[] latLng;
+//        List<LatLng> ;
+        double latitude;
+        double longitude;
+
+        for (Zone zone : zones ) {
+            coordinates = zone.coordinates.split("\\;");
+            for(String strLatLng: coordinates) {
+                latLng = strLatLng.split(",");
+                latitude = Double.parseDouble(latLng[0]);
+                latitude = Double.parseDouble(latLng[1]);
+            }
+        }
+    }*/
 
 }

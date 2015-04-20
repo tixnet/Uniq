@@ -47,16 +47,14 @@
 
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
-            android:value="AIzaSyBmfHDfw_8EOx88-zV-GWawomRPHupyDx4" >
+            android:value="AIzaSyApepVa9h_4MTw531v4diGv579tz38Vfms" >
         </meta-data>
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
-
-
         <service
-            android:name=".ZoneCheckerService"
+            android:name="MiniAppService"
             android:enabled="true"
             android:exported="true" >
         </service>
